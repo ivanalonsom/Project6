@@ -9,7 +9,7 @@ def clean_df(df):
     df.columns = [remove_dots(col) for col in df.columns]
 
     new_columns = {
-        "Unnamed: 0" : "Region", 
+        "Unnamed: 0" : "region", 
         "1 CONTRA LAS PERSONAS": "1_against_people",
         "11-Homicidios dolosos/asesinatos": "1.1_intentional_homicides_murders",
         "111-Homicidios dolosos/asesinatos consumados": "1.1.1_intentional_homicides_murders_committed",
@@ -62,17 +62,17 @@ def clean_df(df):
     if df.columns[-2] == "Unnamed: 45":
         df.drop("Unnamed: 45", axis=1, inplace=True)
     df.columns = df.columns.str.replace(' ', '_').str.replace('-', '_')
-
+    df.drop("total_criminal_offenses", axis=1, inplace=True)
     return df
 
 
 def every_float_to_int(df):
     import pandas as pd
 
-    df_temp = df.loc[:, df.columns != 'Region']
+    df_temp = df.loc[:, df.columns != 'region']
     df_temp = df_temp.astype(int)
 
-    df = pd.concat([df["Region"], df_temp], axis=1)
+    df = pd.concat([df["region"], df_temp], axis=1)
 
     return df
 
@@ -80,25 +80,25 @@ def every_float_to_int(df):
 def add_coordinates_from_dict(data_frame):
     
     autonomous_communities_coordinates = {
-        'andalucia': {'Latitude': 37.3873, 'Longitude': -5.9869},
-        'aragon': {'Latitude': 41.6488, 'Longitude': -0.8891},
-        'asturias_principado_de': {'Latitude': 43.3619, 'Longitude': -5.8494},
-        'balears_illes': {'Latitude': 39.5712, 'Longitude': 2.6466},
-        'canarias': {'Latitude': 28.2916, 'Longitude': -16.6291},
-        'cantabria': {'Latitude': 43.1828, 'Longitude': -3.9878},
-        'castilla_y_leon': {'Latitude': 41.6523, 'Longitude': -4.7245},
-        'castilla_-_la_mancha': {'Latitude': 39.8628, 'Longitude': -4.0273},
-        'cataluna': {'Latitude': 41.3851, 'Longitude': 2.1734},
-        'comunitat_valenciana': {'Latitude': 39.4699, 'Longitude': -0.3763},
-        'extremadura': {'Latitude': 39.4765, 'Longitude': -6.3722},
-        'galicia': {'Latitude': 42.5751, 'Longitude': -8.1339},
-        'madrid_comunidad_de': {'Latitude': 40.4168, 'Longitude': -3.7038},
-        'murcia_region_de': {'Latitude': 37.9922, 'Longitude': -1.1307},
-        'navarra_comunidad_foral_de': {'Latitude': 42.6954, 'Longitude': -1.6761},
-        'pais_vasco': {'Latitude': 43.2630, 'Longitude': -2.9349},
-        'rioja_la': {'Latitude': 42.2871, 'Longitude': -2.5396},
-        'ciudad_autonoma_de_ceuta': {'Latitude': 35.8894, 'Longitude': -5.3198},
-        'ciudad_autonoma_de_melilla': {'Latitude': 35.2930, 'Longitude': -2.9387}
+        'ANDALUCÍA': {'Latitude': 37.3873, 'Longitude': -5.9869},
+        'ARAGÓN': {'Latitude': 41.6488, 'Longitude': -0.8891},
+        'ASTURIAS (PRINCIPADO DE)': {'Latitude': 43.3619, 'Longitude': -5.8494},
+        'BALEARS (ILLES)': {'Latitude': 39.5712, 'Longitude': 2.6466},
+        'CANARIAS': {'Latitude': 28.2916, 'Longitude': -16.6291},
+        'CANTABRIA': {'Latitude': 43.1828, 'Longitude': -3.9878},
+        'CASTILLA Y LEÓN': {'Latitude': 41.6523, 'Longitude': -4.7245},
+        'CASTILLA - LA MANCHA': {'Latitude': 39.8628, 'Longitude': -4.0273},
+        'CATALUÑA': {'Latitude': 41.3851, 'Longitude': 2.1734},
+        'COMUNITAT VALENCIANA': {'Latitude': 39.4699, 'Longitude': -0.3763},
+        'EXTREMADURA': {'Latitude': 39.4765, 'Longitude': -6.3722},
+        'GALICIA': {'Latitude': 42.5751, 'Longitude': -8.1339},
+        'MADRID (COMUNIDAD DE)': {'Latitude': 40.4168, 'Longitude': -3.7038},
+        'MURCIA (REGIÓN DE)': {'Latitude': 37.9922, 'Longitude': -1.1307},
+        'NAVARRA (COMUNIDAD FORAL DE)': {'Latitude': 42.6954, 'Longitude': -1.6761},
+        'PAÍS VASCO': {'Latitude': 43.2630, 'Longitude': -2.9349},
+        'RIOJA (LA)': {'Latitude': 42.2871, 'Longitude': -2.5396},
+        'CIUDAD AUTÓNOMA DE CEUTA': {'Latitude': 35.8894, 'Longitude': -5.3198},
+        'CIUDAD AUTÓNOMA DE MELILLA': {'Latitude': 35.2930, 'Longitude': -2.9387}
     }
     
     def get_lat_long(region):
@@ -109,7 +109,7 @@ def add_coordinates_from_dict(data_frame):
             print(f"Warning: Coordinates not found for {community_clean}")
             return None, None
     
-    data_frame['Latitude'], data_frame['Longitude'] = zip(*data_frame['Autonomous Community'].apply(get_lat_long))
+    data_frame['Latitude'], data_frame['Longitude'] = zip(*data_frame['region'].apply(get_lat_long))
     
     return data_frame
 
@@ -117,6 +117,14 @@ def clean_region_names(data_frame):
     def clean_name(name):
         return name.strip().lower().replace(" ", "_").replace("(", "").replace(")", "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u").replace("ñ", "n")
 
-    data_frame['region_cleaned'] = data_frame['Region'].apply(clean_name)
+    data_frame['region_cleaned'] = data_frame['region'].apply(clean_name)
     
     return data_frame
+
+
+def delete_sub_crimes(df):
+    import re
+
+    df = df.loc[:, ~df.columns.str.match(r'^\d{2,}')]
+
+    return df
