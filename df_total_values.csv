@@ -1,4 +1,4 @@
-year,region,Latitude,Longitude,population,values_year,1_against_people_indicator,2_against_freedom_indicator,3_sexual_freedom_indicator,4_family_relationships_indicator,5_property_crimes_indicator,6_collective_security_indicator,7_forgeries_indicator,8_public_administration_indicator,9_justice_administration_indicator,values_year_minus_1,values_year_minus_2,values_year_minus_3
+year,region,latitude,longitude,population,values_year,1_against_people_indicator,2_against_freedom_indicator,3_sexual_freedom_indicator,4_family_relationships_indicator,5_property_crimes_indicator,6_collective_security_indicator,7_forgeries_indicator,8_public_administration_indicator,9_justice_administration_indicator,values_year_minus_1,values_year_minus_2,values_year_minus_3
 2019,0,37.3873,-5.9869,8.414.240,37130,1,0,0,0,0,0,0,0,0,35043.0,35087.0,33661.0
 2019,1,41.6488,-0.8891,1.319.291,4760,1,0,0,0,0,0,0,0,0,4474.0,4146.0,4005.0
 2019,2,43.3619,-5.8494,1.022.800,3368,1,0,0,0,0,0,0,0,0,3159.0,3160.0,3239.0

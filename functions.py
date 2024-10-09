@@ -80,36 +80,36 @@ def every_float_to_int(df):
 def add_coordinates_from_dict(data_frame):
     
     autonomous_communities_coordinates = {
-        'ANDALUCÍA': {'Latitude': 37.3873, 'Longitude': -5.9869},
-        'ARAGÓN': {'Latitude': 41.6488, 'Longitude': -0.8891},
-        'ASTURIAS (PRINCIPADO DE)': {'Latitude': 43.3619, 'Longitude': -5.8494},
-        'BALEARS (ILLES)': {'Latitude': 39.5712, 'Longitude': 2.6466},
-        'CANARIAS': {'Latitude': 28.2916, 'Longitude': -16.6291},
-        'CANTABRIA': {'Latitude': 43.1828, 'Longitude': -3.9878},
-        'CASTILLA Y LEÓN': {'Latitude': 41.6523, 'Longitude': -4.7245},
-        'CASTILLA - LA MANCHA': {'Latitude': 39.8628, 'Longitude': -4.0273},
-        'CATALUÑA': {'Latitude': 41.3851, 'Longitude': 2.1734},
-        'COMUNITAT VALENCIANA': {'Latitude': 39.4699, 'Longitude': -0.3763},
-        'EXTREMADURA': {'Latitude': 39.4765, 'Longitude': -6.3722},
-        'GALICIA': {'Latitude': 42.5751, 'Longitude': -8.1339},
-        'MADRID (COMUNIDAD DE)': {'Latitude': 40.4168, 'Longitude': -3.7038},
-        'MURCIA (REGIÓN DE)': {'Latitude': 37.9922, 'Longitude': -1.1307},
-        'NAVARRA (COMUNIDAD FORAL DE)': {'Latitude': 42.6954, 'Longitude': -1.6761},
-        'PAÍS VASCO': {'Latitude': 43.2630, 'Longitude': -2.9349},
-        'RIOJA (LA)': {'Latitude': 42.2871, 'Longitude': -2.5396},
-        'CIUDAD AUTÓNOMA DE CEUTA': {'Latitude': 35.8894, 'Longitude': -5.3198},
-        'CIUDAD AUTÓNOMA DE MELILLA': {'Latitude': 35.2930, 'Longitude': -2.9387}
+        'ANDALUCÍA': {'latitude': 37.3873, 'longitude': -5.9869},
+        'ARAGÓN': {'latitude': 41.6488, 'longitude': -0.8891},
+        'ASTURIAS (PRINCIPADO DE)': {'latitude': 43.3619, 'longitude': -5.8494},
+        'BALEARS (ILLES)': {'latitude': 39.5712, 'longitude': 2.6466},
+        'CANARIAS': {'latitude': 28.2916, 'longitude': -16.6291},
+        'CANTABRIA': {'latitude': 43.1828, 'longitude': -3.9878},
+        'CASTILLA Y LEÓN': {'latitude': 41.6523, 'longitude': -4.7245},
+        'CASTILLA - LA MANCHA': {'latitude': 39.8628, 'longitude': -4.0273},
+        'CATALUÑA': {'latitude': 41.3851, 'longitude': 2.1734},
+        'COMUNITAT VALENCIANA': {'latitude': 39.4699, 'longitude': -0.3763},
+        'EXTREMADURA': {'latitude': 39.4765, 'longitude': -6.3722},
+        'GALICIA': {'latitude': 42.5751, 'longitude': -8.1339},
+        'MADRID (COMUNIDAD DE)': {'latitude': 40.4168, 'longitude': -3.7038},
+        'MURCIA (REGIÓN DE)': {'latitude': 37.9922, 'longitude': -1.1307},
+        'NAVARRA (COMUNIDAD FORAL DE)': {'latitude': 42.6954, 'longitude': -1.6761},
+        'PAÍS VASCO': {'latitude': 43.2630, 'longitude': -2.9349},
+        'RIOJA (LA)': {'latitude': 42.2871, 'longitude': -2.5396},
+        'CIUDAD AUTÓNOMA DE CEUTA': {'latitude': 35.8894, 'longitude': -5.3198},
+        'CIUDAD AUTÓNOMA DE MELILLA': {'latitude': 35.2930, 'longitude': -2.9387}
     }
     
     def get_lat_long(region):
         community_clean = region.strip()
         if community_clean in autonomous_communities_coordinates:
-            return autonomous_communities_coordinates[community_clean]['Latitude'], autonomous_communities_coordinates[community_clean]['Longitude']
+            return autonomous_communities_coordinates[community_clean]['latitude'], autonomous_communities_coordinates[community_clean]['longitude']
         else:
             print(f"Warning: Coordinates not found for {community_clean}")
             return None, None
     
-    data_frame['Latitude'], data_frame['Longitude'] = zip(*data_frame['region'].apply(get_lat_long))
+    data_frame['latitude'], data_frame['longitude'] = zip(*data_frame['region'].apply(get_lat_long))
     
     return data_frame
 
@@ -128,3 +128,52 @@ def delete_sub_crimes(df):
     df = df.loc[:, ~df.columns.str.match(r'^\d{2,}')]
 
     return df
+
+
+def get_previous_years(df_unpivot_transformed):
+    import pandas as pd
+
+    df_try_minus_years = df_unpivot_transformed 
+
+    df_previous_year = df_unpivot_transformed.copy()
+    df_previous_year['year'] += 1 
+    df_previous_year = df_previous_year[['year', 'region', 'variable', 'value']]
+    df_previous_year.rename(columns={'value': 'values_year_minus_1'}, inplace=True)
+
+    df_try_minus_years = pd.merge(
+        df_try_minus_years,
+        df_previous_year,
+        on=['year', 'region', 'variable'],
+        how='left'
+    )
+
+    df_try_minus_years
+
+
+    df_previous_year_2 = df_unpivot_transformed.copy()
+    df_previous_year_2['year'] += 2  
+    df_previous_year_2 = df_previous_year_2[['year', 'region', 'variable', 'value']]
+    df_previous_year_2.rename(columns={'value': 'values_year_minus_2'}, inplace=True)
+
+    df_try_minus_years = pd.merge(
+        df_try_minus_years,
+        df_previous_year_2,
+        on=['year', 'region', 'variable'],
+        how='left'
+    )
+
+    df_previous_year_3 = df_unpivot_transformed.copy()
+    df_previous_year_3['year'] += 3  
+    df_previous_year_3 = df_previous_year_3[['year', 'region', 'variable', 'value']]
+    df_previous_year_3.rename(columns={'value': 'values_year_minus_3'}, inplace=True)
+
+    df_try_minus_years = pd.merge(
+        df_try_minus_years,
+        df_previous_year_3,
+        on=['year', 'region', 'variable'],
+        how='left'
+    )
+
+    return df_try_minus_years.drop(columns=['variable']).rename(columns={'value':'values_year'})
+
+
