@@ -3,77 +3,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
-# def show_boxplot(df_col):
-#     # Cargar datos
-#     df_outliers = pd.read_csv('data/df_all_outliers.csv')
-
-#     # Verificar si la columna 'clnt_tenure_mnth' existe
-#     if df_col.name in df_outliers.columns:
-#         # Crear el gráfico de cajas y bigotes
-#         plt.figure(figsize=(10, 6))
-#         sns.boxplot(data=df_col)
-#         plt.title(f'Gráfico de Cajas y Bigotes para {df_col.name}')
-#         plt.ylabel('Valores')
-#         plt.grid(True)
-#         st.pyplot(plt)
-        
-#         # Mostrar outliers si existen
-#         desc = df_outliers['clnt_tenure_mnth'].describe()
-#         q1 = desc['25%']
-#         q3 = desc['75%']
-#         iqr = q3 - q1
-#         lower_bound = q1 - 1.5 * iqr
-#         upper_bound = q3 + 1.5 * iqr
-        
-#         outliers = df_outliers[(df_outliers[df_col.name].notna()) & (df_col < lower_bound) | (df_col > upper_bound)]
-#         if not outliers.empty:
-#             st.write(f"Outliers encontrados: {outliers.count()[0]}")
-#         else:
-#             st.write("No se encontraron outliers.")
-#     else:
-#         st.write("La columna no se encuentra en el DataFrame.")
-
-
-# def graph_bar_plot_control_v_test(df):
-#     # Filtrar los grupos de control y test utilizando la columna 'variation'
-#     df_control = df[df["variation"] == 0]
-#     df_test = df[df["variation"] == 1]
-
-#     # Contar y normalizar las ocurrencias de process_step en cada DataFrame
-#     control_counts = df_control['process_step'].value_counts(normalize=True).sort_index() * 100
-#     test_counts = df_test['process_step'].value_counts(normalize=True).sort_index() * 100
-
-#     # Crear un DataFrame para facilitar la comparación
-#     counts_df = pd.DataFrame({'Control (%)': control_counts, 'Test (%)': test_counts})
-
-#     # Graficar
-#     plt.figure(figsize=(10, 6))
-#     counts_df.plot(kind='bar')
-#     plt.title('Comparación Proporcional de process_step entre Control y Test')
-#     plt.xlabel('Process Step')
-#     plt.ylabel('Porcentaje de Ocurrencias (%)')
-#     plt.xticks(rotation=0)
-#     plt.legend(title='Grupo')
-#     plt.grid(axis='y')
-
-#     # Mostrar el gráfico en Streamlit
-#     st.pyplot(plt)
-
- 
-
 def intro():
     st.image("data/demo_heath_map.png", use_column_width=True)
 
     st.markdown("<style>h1 {text-align: justify;}</style>", unsafe_allow_html=True)
-    st.title("Project 6 - What if Covid would never exist? An insight to the future of crime in Spain using Deep Learning") 
+    st.title("Project 6 - What if COVID-19 would never exist? An insight to how crimes in Spain would have developed in 2020 and 2021") 
 
     st.markdown("""<p style='font-size: 18px; text-align: justify'>
                  This project is a predictive analysis of crime statistics in Spain, focusing on how crime trends across different autonomous communities might have continued if 
                 the COVID-19 pandemic had not occurred. Specifically, the model aims to estimate crime levels in 2022 by following the trend observed from 2010, disregarding the 
                 drastic decrease in crime that occurred due to the lockdowns and other restrictions during the pandemic. The analysis leverages data cleaning, transformation, 
-                machine learning, and visualization techniques to provide insights into these hypothetical crime trends. This README will guide you through understanding the project 
-                components and how to run the code.</p>
+                **deep learning**, and visualization techniques to provide insights into these hypothetical crime trends.</p>
         """, unsafe_allow_html=True)
     
     
@@ -86,6 +26,7 @@ def intro():
         df_no_treatment_demo = pd.read_csv('data/df_merged_national.csv')
 
         st.write(df_no_treatment_demo)
+        st.markdown("<p style='color:gray; font-size: 12px; text-align: right'>Data obtained from INE.</h3>", unsafe_allow_html=True)
 
 
 def deep_learning():
