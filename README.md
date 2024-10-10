@@ -127,4 +127,4 @@ This project is licensed under the MIT License.
 
 ## Contact
 
-For any questions or feedback, please contact [Your Email or GitHub].
+For any questions or feedback, please contact Iván Alonso and Luis H. Rodriguez.
