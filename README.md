@@ -4,6 +4,15 @@
 
 This project is a predictive analysis of crime statistics in Spain, focusing on how crime trends across different autonomous communities might have continued if the COVID-19 pandemic had not occurred. Specifically, the model aims to estimate crime levels in 2022 by following the trend observed from 2010, disregarding the drastic decrease in crime that occurred due to the lockdowns and other restrictions during the pandemic. The analysis leverages data cleaning, transformation, machine learning, and visualization techniques to provide insights into these hypothetical crime trends. This README will guide you through understanding the project components and how to run the code.
 
+## Team Members 
+
+| Name             | LinkedIn Profile | Brief Description |
+|----------------------------------|-------------------------------------------|-------------------------------------------|
+| Iván Alonso        |   [LinkedIn](https://www.linkedin.com/in/ivan-alonsom/)   | Data Analyst |
+| Luis H. Rodríguez Fuentes	 |   [LinkedIn](https://www.linkedin.com/in/luis-h-rodr%C3%ADguez-fuentes/)    | Data Analyst |
+
+
+
 ## Files in This Repository
 
 1. **df_total.csv**: This file contains the full dataset of crime data, including different types of crimes across various regions in Spain.
@@ -14,7 +23,7 @@ This project is a predictive analysis of crime statistics in Spain, focusing on 
 
 4. **functions.py**: A Python script containing utility functions used in this project. These functions perform various tasks, such as cleaning column names, converting floats to integers, adding latitude and longitude coordinates based on regions, and merging data for different years.
 
-5. **main.ipynb**: The Jupyter Notebook that includes all the analysis steps, data visualization, machine learning model training, and insights derived from the dataset. It orchestrates the use of other files, processing the data and displaying the results.
+5. **main_principal.ipynb**: The Jupyter Notebook that includes all the analysis steps, data visualization, machine learning model training, and insights derived from the dataset. It orchestrates the use of other files, processing the data and displaying the results.
 
 ## Functionality
 
