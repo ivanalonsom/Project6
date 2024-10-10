@@ -134,6 +134,57 @@ def delete_sub_crimes(df):
     return df
 
 
+def convert_region_into_numeric(df_col, crimesdf):
+
+    if crimesdf:
+        regions = {
+        "ANDALUCÍA": 0,
+        "ARAGÓN": 1,
+        "ASTURIAS (PRINCIPADO DE)": 2,
+        "BALEARS (ILLES)": 3,
+        "CANTABRIA": 4,
+        "CANARIAS": 5,
+        "CASTILLA - LA MANCHA": 6,
+        "CASTILLA Y LEÓN": 7,
+        "CATALUÑA": 8,
+        "CIUDAD AUTÓNOMA DE CEUTA": 9,
+        "CIUDAD AUTÓNOMA DE MELILLA": 10,
+        "COMUNITAT VALENCIANA": 11,
+        "EXTREMADURA": 12,
+        "GALICIA": 13,
+        "MADRID (COMUNIDAD DE)": 14,
+        "MURCIA (REGIÓN DE)": 15,
+        "NAVARRA (COMUNIDAD FORAL DE)": 16,
+        "PAÍS VASCO": 17,
+        "RIOJA (LA)": 18
+        }
+        
+    else:
+        regions = {
+        "01 Andalucía": 0,
+        "02 Aragón": 1,
+        "03 Asturias Principado de": 2,
+        "04 Balears Illes": 3,
+        "06 Cantabria": 4,
+        "05 Canarias": 5,
+        "08 Castilla - La Mancha": 6,
+        "07 Castilla y León": 7,
+        "09 Cataluña": 8,
+        "18 Ceuta": 9,
+        "19 Melilla": 10,
+        "10 Comunitat Valenciana": 11,
+        "11 Extremadura": 12,
+        "12 Galicia": 13,
+        "13 Madrid Comunidad de": 14,
+        "14 Murcia Región de": 15,
+        "15 Navarra Comunidad Foral de": 16,
+        "16 País Vasco": 17,
+        "17 Rioja La": 18
+    }
+        
+    return df_col.replace(regions)
+
+
 def get_previous_years(df_unpivot_transformed):
     import pandas as pd
 
