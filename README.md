@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a predictive analysis of crime statistics in Spain, focusing on how crime trends across different autonomous communities might have continued if the COVID-19 pandemic had not occurred. Specifically, the model aims to estimate crime levels in 2022 by following the trend observed from 2010, disregarding the drastic decrease in crime that occurred due to the lockdowns and other restrictions during the pandemic. The analysis leverages data cleaning, transformation, machine learning, and visualization techniques to provide insights into these hypothetical crime trends. This README will guide you through understanding the project components and how to run the code.
+This project is a predictive analysis of crime statistics in Spain, focusing on how crime trends across different autonomous communities might have continued if the COVID-19 pandemic had not occurred. Specifically, the model aims to estimate crime levels in 2022 by following the trend observed from 2010, disregarding the drastic decrease in crime that occurred due to the lockdowns and other restrictions during the pandemic. The analysis leverages data cleaning, transformation, **deep learning**, and visualization techniques to provide insights into these hypothetical crime trends. This README will guide you through understanding the project components and how to run the code.
 
 ## Link to Streamlit
 https://deep-learning-spain-crimen-study.streamlit.app/
