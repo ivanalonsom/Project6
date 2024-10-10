@@ -177,3 +177,8 @@ def get_previous_years(df_unpivot_transformed):
     return df_try_minus_years.drop(columns=['variable']).rename(columns={'value':'values_year'})
 
 
+def convert_region_into_numeric(df):
+    import pandas as pd
+    df['region'] = df['region'].astype('category')
+    df['region'] = df['region'].cat.codes
+    return df
