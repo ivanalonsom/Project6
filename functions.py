@@ -1,3 +1,7 @@
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
+
 def remove_dots(column_name):
     import re
     return re.sub(r'(\d)\.(?=\d)', r'\1', column_name)
@@ -173,7 +177,45 @@ def get_previous_years(df_unpivot_transformed):
         on=['year', 'region', 'variable'],
         how='left'
     )
+    
+    df_try_minus_years = df_try_minus_years.dropna(subset=['values_year_minus_1', 'values_year_minus_2', 'values_year_minus_3']).reset_index(drop=True)
+    
+    return df_try_minus_years
 
-    return df_try_minus_years.drop(columns=['variable']).rename(columns={'value':'values_year'})
 
+def apply_pca(df, columns, n_components=0.9, random_state=42):
+    """
+    Apply PCA to the specified columns of a DataFrame and add the PCA results to a copy of the original DataFrame.
 
+    Parameters:
+    df (pd.DataFrame): The original DataFrame.
+    columns (list): The list of columns to apply PCA on.
+    n_components (float or int): Number of components to keep. If 0 < n_components < 1, it represents the variance ratio.
+    random_state (int): Random state for reproducibility.
+
+    Returns:
+    pd.DataFrame: A new DataFrame with the PCA results added.
+    """
+    # Extract the data for the specified columns
+    values_data = df[columns]
+
+    # Standardize the data
+    scaler = StandardScaler()
+    values_scaled = scaler.fit_transform(values_data)
+
+    # Apply PCA
+    pca = PCA(n_components=n_components, random_state=random_state)
+    pca_result = pca.fit_transform(values_scaled)
+
+    # Create PCA column names
+    pca_columns = [f'Value_year_PCA{i+1}' for i in range(pca_result.shape[1])]
+    df_pca_values = pd.DataFrame(pca_result, columns=pca_columns)
+
+    # Create a copy of the original DataFrame and add the first PCA component
+    df_pca = df.copy()
+    df_pca['Values_year_PCA'] = df_pca_values['Value_year_PCA1']
+
+    # Drop the original columns used for PCA
+    df_pca = df_pca.drop(columns=columns)
+
+    return df_pca
