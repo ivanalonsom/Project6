@@ -78,7 +78,10 @@ def conclusions():
     st.write("The obtained score for Random Forest is:")
     st.code("Mean Absolute Error (MAE): 1033.0388923532064 \nRoot Mean Squared Error (RMSE): 4707.907926358289 \nR² Score: 0.9896681902859178")
 
-    st.image("data/crimes_year_mean_pred.png", use_column_width=True)
+    st.write("Real data from INE vs Calculated and predicted data:")
+    st.image("data/real_v_pred.jpg", use_column_width=True)
+
+    
 
 
 
