@@ -111,9 +111,10 @@ These metrics indicate that the model performed well in predicting crime trends,
 
 4. You can use **functions.py** to preprocess any updates to the dataset before running the analysis.
 
-## Key Insights
+## Key Insights and Conclusions
 
-- **Crime Trends by Region**: Certain regions showed higher prevalence in specific crime categories, suggesting targeted interventions.
+- **Continued Crime Growth**: Crime levels in 2021 would have followed previous trends (2010-2019), especially in property crimes.
+- **Regional Variability**: Regions like Andalucía and Madrid would have higher crime rates.
 - **Dimensionality Reduction**: PCA helped identify the most significant features contributing to crime rates, facilitating clearer visualization while reducing the complexity of the dataset.
 - **Prediction of Crime Trends**: Leveraging historical data and region-based information enabled the prediction of potential future crime trends if the COVID-19 pandemic had not occurred.
 - **Machine Learning Performance**: The use of hyperparameter tuning and cross-validation ensured that the models are robust and provide reliable predictions.
