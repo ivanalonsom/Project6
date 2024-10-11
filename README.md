@@ -39,6 +39,7 @@ https://deep-learning-spain-crimen-study.streamlit.app/
 - **clean_region_names(data_frame)**: Standardizes region names to a consistent format for easier analysis.
 - **delete_sub_crimes(df)**: Removes columns representing subcategories of crimes to focus on higher-level crime categories.
 - **get_previous_years(df_unpivot_transformed)**: Adds columns to represent the crime data from previous years (up to 3 years back), allowing for trend analysis.
+- **apply_pca(df, columns, n_components=0.9, random_state=42)**: Apply the PCA to the selected columns and thus concentrate the information at 90%
 
 ### Data Preprocessing
 
